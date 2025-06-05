@@ -1,0 +1,15 @@
+# monitoring/grafana_datasources.yml
+apiVersion: 1
+
+datasources:
+  - name: PrometheusTechAssistant
+    type: prometheus
+    access: proxy # Grafana backend calls Prometheus, not the browser
+    url: http://prometheus:9090 # 'prometheus' is the service name in docker-compose
+    isDefault: true
+    editable: true # Allow editing in Grafana UI
+    jsonData:
+      timeInterval: "15s" # How often Grafana should query Prometheus
+      # queryTimeout: "60s"
+      # httpMethod: "POST" # If your Prometheus needs POST for queries
+    version: 1

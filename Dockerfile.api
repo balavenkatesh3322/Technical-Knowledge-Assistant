@@ -1,0 +1,47 @@
+# Dockerfile.api
+FROM python:3.9-slim
+
+# Set environment variables to prevent Python from writing .pyc files and to buffer output
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /app
+
+# Install system dependencies if any (e.g., for database drivers, C extensions)
+# RUN apt-get update && apt-get install -y --no-install-recommends some-package && rm -rf /var/lib/apt/lists/*
+
+# Create a non-root user and group
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+# Install pipenv if you were to use it, or just copy requirements.txt
+COPY ./requirements.txt /app/requirements.txt
+
+# Install Python dependencies
+# Using a virtual environment within the Docker image is a good practice
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copy the application code into the container
+# Ensure this path matches your project structure
+COPY ./app /app/app
+
+# Change ownership of the app directory to the non-root user
+RUN chown -R appuser:appuser /app
+# Also ensure the venv is accessible if needed, though typically it's owned by root
+# RUN chown -R appuser:appuser /opt/venv
+
+# Switch to the non-root user
+USER appuser
+
+# Expose the port the API will run on (should match uvicorn command in docker-compose)
+# This is defined by API_PORT in .env, default 8080
+# EXPOSE ${API_PORT:-8080} # EXPOSE instruction doesn't support variable substitution directly during build.
+# The port is exposed in docker-compose.yml.
+
+# Command to run the Uvicorn server
+# This is typically overridden by docker-compose.yml for development (e.g. with --reload)
+# The CMD in docker-compose will take precedence.
+CMD ["uvicorn", "app.api.main:app", "--host", "0.0.0.0", "--port", "8080"]

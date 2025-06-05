@@ -1,0 +1,39 @@
+# Core API & Worker
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+celery==5.4.0
+redis==5.0.4 # For Celery broker/backend and potentially results
+watchdog==6.0.0
+
+# Database (PostgreSQL)
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.30
+alembic==1.13.1 # For database migrations
+python-dotenv==1.0.1 # For .env file support
+
+# LLM & Embeddings
+transformers==4.41.0
+torch==2.3.0 # Or torch version compatible with your hardware (e.g., +cpu or +cuXYZ)
+sentence-transformers==2.7.0
+
+# Vector DB Client (ChromaDB as an example)
+chromadb-client==1.0.12
+
+# Monitoring & Logging
+prometheus-client==0.20.0 # For exposing Prometheus metrics
+python-json-logger==3.3.0 # For structured logging
+
+# Data Ingestion
+datasets==3.6.0 # For Hugging Face datasets
+
+# Utilities
+httpx==0.28.1 # For making HTTP requests (e.g., to LLM service if separate, or for testing)
+shortuuid==1.0.13 # For generating short, unique IDs if needed beyond UUID
+
+# Testing (can be in a separate requirements-dev.txt)
+pytest==8.4.0
+pytest-cov==6.1.1
+pytest-asyncio==1.0.0 # For testing FastAPI async endpoints
+flake8==7.0.0
+black==24.4.2
+mypy==1.10.0

@@ -1,0 +1,42 @@
+# monitoring/prometheus.yml
+global:
+  scrape_interval: 15s # How frequently to scrape targets by default.
+  evaluation_interval: 15s # How frequently to evaluate rules.
+
+# Alertmanager configuration (optional, if you set up alerting)
+# alerting:
+#   alertmanagers:
+#     - static_configs:
+#         - targets:
+#           # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+# rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"] # Prometheus scraping itself
+
+  - job_name: "technical_knowledge_api"
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+    static_configs:
+      # 'api' is the service name in docker-compose.yml
+      # Docker's internal DNS will resolve 'api' to the container's IP.
+      # Port 8080 is the port the FastAPI app runs on INSIDE its container.
+      - targets: ["api:8080"] 
+    # If your API's metrics endpoint is different, specify it:
+    # metrics_path: /api/v1/metrics # Example if metrics are on a different path
+
+  # If your Celery worker exposes Prometheus metrics directly (e.g., via prometheus_client in a separate thread/server)
+  # you would add a job for it here. This requires the worker to run an HTTP server for metrics.
+  # Example (assuming worker exposes metrics on port 8001):
+  # - job_name: "celery_worker"
+  #   static_configs:
+  #     - targets: ["worker:8001"] # 'worker' is the service name, 8001 is the metrics port

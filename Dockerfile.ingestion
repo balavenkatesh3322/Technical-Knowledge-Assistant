@@ -1,0 +1,47 @@
+# Dockerfile.ingestion
+FROM python:3.9-slim
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /app
+
+# Install system dependencies if any (e.g., for git if cloning models)
+# RUN apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
+
+# Create a non-root user
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+COPY ./requirements.txt /app/requirements.txt
+
+# Using a virtual environment
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Configure Hugging Face cache directories
+ENV TRANSFORMERS_CACHE=/home/appuser/.cache/huggingface/transformers
+ENV HF_HOME=/home/appuser/.cache/huggingface
+ENV SENTENCE_TRANSFORMERS_HOME=/home/appuser/.cache/sentence_transformers
+ENV HF_DATASETS_CACHE=/home/appuser/.cache/huggingface/datasets
+
+RUN mkdir -p /home/appuser/.cache/huggingface/hub && \
+    mkdir -p ${TRANSFORMERS_CACHE} && \
+    mkdir -p ${SENTENCE_TRANSFORMERS_HOME} && \
+    mkdir -p ${HF_DATASETS_CACHE} && \
+    chown -R appuser:appuser /home/appuser/.cache
+
+# Copy only the ingestion script and any shared core components
+COPY ./data_ingestion /app/data_ingestion
+COPY ./app/core /app/app/core 
+COPY ./app/services /app/app/services
+COPY ./app/db /app/app/db
+
+RUN chown -R appuser:appuser /app
+
+USER appuser
+
+# Default command (can be overridden in docker-compose run)
+CMD ["python", "data_ingestion/ingest.py"]
