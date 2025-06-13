@@ -1,7 +1,6 @@
 # Project Proposal: Technical Knowledge Assistant
-## Revolutionizing Knowledge Access and Efficiency at Ramboll
+## Revolutionizing Knowledge Access and Efficiency
 
-**Prepared For**: Ramboll Stakeholders  
 **Prepared By**: Bala venkatesh S
 
 **Date**: June 5, 2025
@@ -11,7 +10,7 @@
 ![Architecture Diagram](./images/Business-proposal.png)
 
 ## 1. The Challenge: Unlocking Trapped Knowledge
-Ramboll's engineers and consultants require rapid access to technical standards, best practices, project histories, and regulatory information. Current challenges include:
+company's engineers and consultants require rapid access to technical standards, best practices, project histories, and regulatory information. Current challenges include:
 
 - **Time-Consuming Searches**: Manually navigating document libraries or relying on colleagues wastes valuable engineering hours.
 - **Inefficient Processes**: Scattered information across systems hinders comprehensive research.
@@ -21,12 +20,12 @@ Ramboll's engineers and consultants require rapid access to technical standards,
 This "knowledge retrieval gap" slows project timelines, reduces efficiency, and risks inconsistent application of best practices.
 
 ## 2. Our Solution: Technical Knowledge Assistant
-The Technical Knowledge Assistant is an AI-powered microservice delivering rapid, accurate, and contextually relevant answers to technical queries from Ramboll’s documentation, using natural language processing.
+The Technical Knowledge Assistant is an AI-powered microservice delivering rapid, accurate, and contextually relevant answers to technical queries from company’s documentation, using natural language processing.
 
 ## 3. How It Works: Retrieval Augmented Generation (RAG)
 The system leverages **Retrieval Augmented Generation (RAG)** for accurate, sourced answers:
 
-1. **Knowledge Ingestion**: Processes documents (e.g., Ramboll’s internal corpus) into chunks, indexed in a Vector Database for efficient search.
+1. **Knowledge Ingestion**: Processes documents (e.g., company’s internal corpus) into chunks, indexed in a Vector Database for efficient search.
 2. **User Query**: Engineers ask questions in natural language (e.g., "What are seismic design considerations for steel structures in Zone 4?").
 3. **Intelligent Retrieval**: Searches the Vector Database for relevant document passages.
 4. **Contextual Generation**: A Large Language Model (LLM) generates a concise answer using retrieved passages.
@@ -39,7 +38,7 @@ The system leverages **Retrieval Augmented Generation (RAG)** for accurate, sour
 - **Cost-Effective**: Leverages pre-trained LLMs, avoiding costly custom training.
 
 ## 4. Key Benefits & Value Proposition
-The Assistant delivers significant value to Ramboll:
+The Assistant delivers significant value to company:
 
 - **Reduced Search Time**:
   - **User Value**: Answers in seconds, freeing time for core engineering tasks.
@@ -111,9 +110,9 @@ The Assistant supports key tasks:
 - **Phase 1: Proof of Concept Refinement**:
   - Finalize core functionality with test dataset (e.g., simple-wikipedia).
   - Internal pilot with small engineer group, gather feedback.
-  - Refine ingestion for Ramboll document formats.
+  - Refine ingestion for company document formats.
 - **Phase 2: Integration & Extended Pilot**:
-  - Connect to Ramboll’s document repositories.
+  - Connect to company’s document repositories.
   - Ingest curated internal documents.
   - Expand pilot, develop user documentation.
 - **Phase 3: Production Rollout**:
@@ -122,4 +121,4 @@ The Assistant supports key tasks:
   - Monitor performance, update knowledge base, explore LLM fine-tuning.
 
 ## 9. Call to Action
-The Technical Knowledge Assistant will transform how Ramboll’s engineers access information, driving productivity, quality, and innovation. We seek your support to advance development, deploy the system, and realize its full potential. Contact us to discuss, demo the prototype, or address questions.
+The Technical Knowledge Assistant will transform how company’s engineers access information, driving productivity, quality, and innovation. We seek your support to advance development, deploy the system, and realize its full potential. Contact us to discuss, demo the prototype, or address questions.
